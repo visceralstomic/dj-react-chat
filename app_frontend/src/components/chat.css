@@ -1,0 +1,177 @@
+:root {
+    --chat-header-height: 75px;
+    --chat-header-padding: 10px;
+
+    --chat-panel-height: 85px;
+    --chat-panel-padding: 15px;
+
+}
+.chat-area {
+    direction: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    height: var(--chat-header-height);
+    align-self: start;
+    padding: var(--chat-header-padding);
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-buttons > button {
+    margin: 3px;
+}
+
+
+.chat-log {
+    --log-padding: 7px;
+
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: var(--log-padding);
+    height: calc(var(--app-max-height) - var(--chat-header-height) - var(--chat-panel-height));
+    bottom:0;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: row;
+    margin: 3px 0 3px 0;   
+}
+
+.message-text {
+    max-width: 350px;
+    color: black;
+    background-color: white;
+    margin-left: 5px ;
+    padding: 7px;
+    border-radius: 10px;
+    font-size: 1.05em;
+    display: flex;
+    font-size: 1.05em;
+    flex-direction:column;
+    border: 1px solid black;
+}
+
+.sender {
+    align-self: end;
+}
+
+.sender > .message-text  {
+    color: hsl(353, 59%, 43%);
+    border: 1px solid hsl(353, 59%, 43%);
+    margin-left: 0 ;
+}
+
+.sender > .user-photo   {
+    display: none;
+}
+
+.sender > .alt-user-photo  {
+    display: none;
+}
+
+.info-username {
+    font-size: 0.75em;
+    color: grey;
+}
+
+.info-date {
+    font-size: 0.7em;
+    color: grey;
+    align-self: end;
+}
+
+.sender > .message-text > .info-username  {
+    display: none;
+}
+
+.chat-input-panel {
+    border-top: 1px solid black; 
+    align-self: end;
+    height: var(--chat-panel-height);
+    padding: var(--chat-panel-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.message-input {
+    border-radius: 10px;
+    padding: 8px;
+    resize: none;
+    border: 1px solid hsl(353, 59%, 43%);
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+.to-side-bar {
+    display: none;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .message-input {
+        width: 320px;
+    }
+}
+
+
+@media only screen and (max-width: 640px) {
+    .message-input {
+        width: 400px;
+    }
+
+    .to-side-bar {
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width: 510px) {
+    .message-input {
+        width: 320px;
+    }
+
+}
+
+@media only screen and (max-width: 420px) {
+    .message-input {
+        width: 250px;
+    }
+
+    .message-text {
+        font-size: 1em;
+        max-width: 210px;
+    }
+
+
+}
+
+@media only screen and (max-width: 365px) {
+    .message-input {
+        width: 190px;
+        font-size: 0.80em;
+    }
+
+
+}
+
+@media only screen and (max-width: 300px) {
+    .message-input {
+        width: 160px;
+    }
+
+    .message-text {
+        font-size: 0.90em;
+        max-width: 150px;
+    }
+
+}
