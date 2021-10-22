@@ -15,7 +15,6 @@ import UserImage from "./components/userImage";
 const App = () => {
   const [state, dispatch] = useContext(GlobalStore);
   const chatRoom = state.chat.currentRoom;
-  
   return (
     <div className="app">
         <Router>

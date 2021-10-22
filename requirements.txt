@@ -16,6 +16,7 @@ daphne==3.0.2
 Django==3.2.7
 django-cloudinary-storage==0.3.0
 django-cors-headers==3.10.0
+django-environ==0.7.0
 djangorestframework==3.12.4
 hiredis==2.0.0
 hyperlink==21.0.0

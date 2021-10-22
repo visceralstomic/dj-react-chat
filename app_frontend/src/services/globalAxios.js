@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const DOMAIN = process.env.NODE_ENV === 'production' ? "" : "localhost:8000"
+export const DOMAIN = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PROD_URL : "localhost:8000"
 export const SOCKET_URL = `${process.env.NODE_ENV === 'production' ? "wss" : 'ws'}://${DOMAIN}`
 const baseURL = `${process.env.NODE_ENV === 'production' ? "https" : 'http'}://${DOMAIN}`;
 

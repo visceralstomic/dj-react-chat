@@ -3,5 +3,5 @@ __pychache__/
 db.sqlite3
 venv/
 node_modules/
-.env
+*.env
 migrations/
