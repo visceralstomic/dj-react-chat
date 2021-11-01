@@ -2,7 +2,7 @@ import {useState, useContext} from "react";
 import UserService from "../services/userService";
 import {GlobalStore} from "../store/globalStore";
 import {useLocation, useHistory} from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const LoginForm = props => {
     const { toggle, setToggle} = props;

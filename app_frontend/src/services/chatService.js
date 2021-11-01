@@ -36,7 +36,7 @@ const deleteRoom = room_id => {
 const deleteUserFromRoom = data => {
     console.log('delete', typeof data)
     return axios_instance
-            .delete(`/chat/participant/${data}`)
+            .delete(`/chat/participant/${data}/`)
             .then(response => response.data)
 }
 

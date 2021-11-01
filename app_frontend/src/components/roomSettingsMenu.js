@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalStore } from "../store/globalStore";
 import chatService from "../services/chatService";
 import { Button, Modal, ModalHeader, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink,
@@ -6,15 +6,42 @@ import { Button, Modal, ModalHeader, ModalBody, TabContent, TabPane, Nav, NavIte
 import classnames from 'classnames';
 import Participants from "./participants";
 import AddUsers from "./addUsers";
+import UserService from "../services/userService";
+
 
 
 const RoomSettingsMenu = ({show, setShow}) => {
     const [activeTab, setActiveTab] = useState('1');
     const [state, dispatch] = useContext(GlobalStore);
+    const [allUsers, setAllUsers] = useState([]);
+    const [participants, setParticipants] = useState([]);
+
+    const chatRoom = state.chat.currentRoom;
+
     
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     }
+    
+    useEffect(() => {
+        UserService
+                .getUsers(`part_room=${chatRoom.id}`)
+                .then(data => {
+                    setAllUsers(data.map(user => ({...user, toAdd: false}) ))
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        chatService
+                .getRoomParticipants(chatRoom.id)
+                .then(data => {
+
+                  setParticipants(data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+    }, [chatRoom])
 
     const handleClose = () => setShow(false);
 
@@ -66,13 +93,20 @@ const RoomSettingsMenu = ({show, setShow}) => {
         <TabContent activeTab={activeTab}>
             <TabPane tabId='1'>
                 <ListGroup className='partic-list'>
-                    <Participants />
+                    <Participants 
+                        participants={participants}
+                        setParticipants={setParticipants}
+                        setUsers={setAllUsers}
+                    />
                 </ListGroup>
             </TabPane>
             {state.user.uid === state.chat.currentRoom.creator.id ? (
                 <TabPane tabId='2'>
                     <ListGroup className='partic-list'>
-                        <AddUsers />
+                        <AddUsers 
+                            users={allUsers} setUsers={setAllUsers}
+                            setParticipants={setParticipants}
+                        />
                     </ListGroup>
                 </TabPane>
             ) : (
@@ -82,7 +116,7 @@ const RoomSettingsMenu = ({show, setShow}) => {
         </ModalBody>
         <ModalFooter>
             {state.user.uid === state.chat.currentRoom.creator.id ? (
-                <Button color="danger" onClick={handleDelete} >Delete</Button>
+                <Button color="danger" onClick={handleDelete} >Delete room</Button>
             ) : (
                 null
             )}

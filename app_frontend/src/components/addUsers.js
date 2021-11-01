@@ -1,27 +1,13 @@
-import {useState, useEffect, useContext} from "react";
+import {useContext} from "react";
 import { Button, ListGroup, ListGroupItem , Label, Input} from 'reactstrap';
-import UserService from "../services/userService";
 import chatService from "../services/chatService";
 import {GlobalStore} from "../store/globalStore";
 
 
-const AddUsers = () => {
+const AddUsers = ({users, setUsers,setParticipants }) => {
     const [state, dispatch] = useContext(GlobalStore);
-    const [users, setUsers] = useState([]);
     const chatRoom = state.chat.currentRoom;
 
-    useEffect(() => {
-        if (chatRoom) {
-            UserService
-                .getUsers(`part_room=${chatRoom.id}`)
-                .then(data => {
-                    setUsers(data.map(user => ({...user, toAdd: false}) ))
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
-    }, [chatRoom])
 
     const handleCheck = event => {
         const { checked, value } = event.target;
@@ -33,16 +19,16 @@ const AddUsers = () => {
             const promises = [];
             for (let i in users) {
                 if (users[i].toAdd) {
-                    promises.push(chatService.addUserToRoom({user: users[i].id, room: state.chat.currentRoom.id}))
+                    promises.push(chatService.addUserToRoom({user: users[i].id, room: chatRoom.id}))
                 }
             }
             Promise.all(promises).then(data => {
                 data.forEach(partic => {
-                    const userPartic = users.find(user => user.id === partic.user)
-                    delete userPartic.toAdd
-                    const newParticipant = {id: partic.id, user: userPartic, room: partic.room }
-                    setUsers(prevState => prevState.filter(user => user.id !== partic.user))
-                    dispatch({type: "ADD_PARTICIPANT", data: newParticipant})
+                    const userPartic = users.find(user => user.id === partic.user);
+                    delete userPartic.toAdd;
+                    const newParticipant = {id: partic.id, user: userPartic, room: partic.room };
+                    setUsers(prevState => prevState.filter(user => user.id !== partic.user));
+                    setParticipants(prevState => [...prevState, newParticipant]);
                 })
             })
         }

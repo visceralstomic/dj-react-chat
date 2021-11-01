@@ -31,35 +31,7 @@ const chatReducer = (state, action) => {
                 ...state,
                 chat: {
                     currentRoom: null,
-                    rooms: rooms,
-                    participants: []
-
-                }
-            }
-        case "SET_PARTICIPANTS":
-            return {
-                ...state,
-                chat: {
-                    ...state.chat,
-                    participants: action.data
-                }
-            }
-        case 'ADD_PARTICIPANT':
-            return {
-                ...state,
-                chat: {
-                    ...state.chat,
-                    participants: [...state.chat.participants, action.data]
-                }
-            }
-
-        case 'DELETE_PARTICIPANT':
-            const newParticipants = state.chat.participants.filter(user => user.id !== action.data.id)
-            return {
-                ...state,
-                chat: {
-                    ...state.chat,
-                    participants: newParticipants
+                    rooms: rooms
                 }
             }
         case "SET_NO_ROOM":

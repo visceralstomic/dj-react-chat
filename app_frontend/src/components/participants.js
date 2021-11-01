@@ -4,21 +4,22 @@ import ChatService from "../services/chatService";
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import {FaCrown, FaTrashAlt} from "react-icons/fa";
 
-const Participants = () => {
+const Participants = ({participants, setParticipants, setUsers}) => {
     const [state, dispatch] = useContext(GlobalStore);
     const chatRoom = state.chat.currentRoom;
-    const {participants} = state.chat;
 
     const handleDelete = (event, id) => {
       if (window.confirm('Are you sure you want to delete this user from this room?')){
         ChatService
-        .deleteUserFromRoom(id)
-        .then(data => {
-          dispatch({type: 'DELETE_PARTICIPANT', data: {id: id}})
-        })
-        .catch(error => {
-          console.error(error);
-        })
+          .deleteUserFromRoom(id)
+          .then(data => {
+            const {user} = participants.find(partic => partic.id === id);
+            setUsers(prevState => [...prevState, {...user, toAdd: false}]);
+            setParticipants(prevState => prevState.filter(participant => participant.id !== id));
+          })
+          .catch(error => {
+            console.error(error);
+          })
       }
     }
     

@@ -1,7 +1,10 @@
 FROM node:alpine
 
-WORKDIR /app/frontend
-COPY package.json package-lock.json ./
-RUN npm ci 
-COPY . ./
+WORKDIR /app/app_frontend
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm i
+
 EXPOSE 3000
+

@@ -25,18 +25,6 @@ const Chat = props => {
       chatLogRef.current.scrollIntoView({ behavior: "auto" });
     }, [messages])
 
-    useEffect(() => {
-      if (chatRoom) {
-        chatService
-          .getRoomParticipants(chatRoom.id)
-          .then(data => {
-            dispatch({type: 'SET_PARTICIPANTS', data});
-          })
-      }
-      setNewMessages('');
-      setToggle(false);      
-    }, [chatRoom])
-
     useEffect(()=> {
         socket.current =  new WebSocket(`${SOCKET_URL}/ws/chat/${chatRoom.id}/`);
         socket.current.addEventListener('open', (event) => {
