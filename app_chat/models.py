@@ -25,7 +25,7 @@ class Message(models.Model):
         return self.text
     
     def last_messages(room_id):
-        return reversed(Message.objects.filter(room__id=room_id).order_by("-create_date")[:10])
+        return reversed(Message.objects.filter(room__id=room_id).select_related('author').order_by("-create_date")[:10])
 
 
 class Participant(models.Model):

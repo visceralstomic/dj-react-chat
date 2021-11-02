@@ -1,51 +1,24 @@
 import json
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message, Room
 from django.contrib.auth import get_user_model
+from channels.db import database_sync_to_async
+
 
 User = get_user_model()
 
 
-class ChatConsumer(WebsocketConsumer):
+class ChatConsumer(AsyncWebsocketConsumer):
 
 
-    def fetch_messages(self, data):
-        messages = Message.last_messages(self.room_id)
-        content = {
-            "messages": self.msgs_to_json(messages),
-            "command": 'messages'
-        }
-        self.send_message(content)
-
-    def new_message(self, data):
-        author = data['from']
-        author_user = User.objects.get(id=author['id'])
-        room = Room.objects.get(id=self.room_id)
-
-        message = Message.objects.create(
-            author=author_user,
-            text=data["message"],
-            room=room
-        )
-
-        content = {
-            'command': 'new_message',
-            'message': self.msg_to_json(message)
-        }
-
-        self.send_chat_message(content)
-
-    commands = {
-        'fetch_messages': fetch_messages,
-        'new_message': new_message
-    }
-
-    def msgs_to_json(self, messages):
-        return [self.msg_to_json(message) for message in messages]
+    async def convert_messages(self, messages):
+        converted_messages = []
+        for message in messages:
+            converted_message = await self.convert_message(message)
+            converted_messages.append(converted_message)
+        return converted_messages
     
-    def msg_to_json(self, message):
-        
+    async def convert_message(self, message):
         return {
             "author": {
                 'username': message.author.username,
@@ -56,42 +29,92 @@ class ChatConsumer(WebsocketConsumer):
             "create_date": str(message.create_date)
         }
 
-    def connect(self):
+    @database_sync_to_async
+    def get_messages(self, room_id):
+        return Message.last_messages(room_id)
+
+    @database_sync_to_async
+    def get_user(self, id):
+        return User.objects.get(id=id)
+
+    @database_sync_to_async
+    def get_room(self, id):
+        return Room.objects.get(id=id)
+
+    @database_sync_to_async
+    def create_room(self, author, text, room):
+        return Message.objects.create(
+            author=author,
+            text=text,
+            room=room
+        )
+
+    async def fetch_messages(self):
+        messages = await self.get_messages(self.room_id)
+        converted_messages = await self.convert_messages(messages)
+        content =  {
+            "messages": converted_messages,
+            "command": 'messages'
+        }
+        await self.send_message(content)
+
+    async def new_message(self, data):
+        author = data['from']
+        author_user = await self.get_user(author['id'])
+        room = await self.get_room(self.room_id)
+
+        message = await self.create_room(
+            author=author_user,
+            text=data["message"],
+            room=room
+        )
+
+        return {
+            'command': 'new_message',
+            'message': await self.convert_message(message)
+        }
+
+    async def connect(self):
         if self.scope['user'].is_anonymous:
-            self.close()
+            await self.close()
         else:
             self.room_id = self.scope['url_route']['kwargs']['room_id']
             self.room_group_name = f'chat_{self.room_id}'
 
-            async_to_sync(self.channel_layer.group_add)(
+            await self.channel_layer.group_add(
                 self.room_group_name,
                 self.channel_name
             )
 
-            self.accept()
+            await self.accept()
 
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
+    async def disconnect(self, close_code):
+
+        await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    def receive(self, text_data):
-        data = json.loads(text_data)
-        self.commands[data['command']](self, data)
 
-    def send_chat_message(self, message):
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        command = text_data_json['command']
 
-    def send_message(self, message):
-        self.send(text_data=json.dumps(message))
+        if command == "fetch_messages":
+            await self.fetch_messages()
+        elif command == "new_message":
+            content = await self.new_message(text_data_json)
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': content
+                }
+            )
 
-    def chat_message(self, event):
+    async def send_message(self, message):
+        await self.send(text_data=json.dumps(message))
+
+    async def chat_message(self, event):
         message = event['message']
-        self.send(text_data=json.dumps(message))
+        await self.send(text_data=json.dumps(message))

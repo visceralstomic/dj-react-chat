@@ -2,11 +2,8 @@ import {useState, useEffect, useRef, useContext} from "react";
 import {GlobalStore} from "../store/globalStore";
 import "./chat.css";
 import ChatMessage  from "./chatMessage";
-import Participants from "./participants";
 import { Button} from 'reactstrap';
-import chatService from "../services/chatService";
 import { SOCKET_URL } from "../services/globalAxios";
-import AddUsers from "./addUsers";
 import {FaArrowLeft} from "react-icons/fa";
 import RoomSettingsMenu from "./roomSettingsMenu";
 
@@ -15,8 +12,6 @@ const Chat = props => {
     const [newMessage, setNewMessages] = useState('');
     const [toggle, setToggle] = useState(false);
     const [state, dispatch] = useContext(GlobalStore);
-    const [show, setShow] = useState(false);
-    const [showUsers, setShowUsers] = useState(false);
     const socket = useRef(null);
     const chatLogRef = useRef();
     const chatRoom = state.chat.currentRoom;  
