@@ -1,8 +1,8 @@
 import {useState, useContext} from "react";
 import ChatService from "../services/chatService";
 import {GlobalStore} from "../store/globalStore";
-import { Form, FormGroup, Input, FormFeedback, Button} from 'reactstrap';
-
+import { Form, FormGroup, Input, FormFeedback} from 'reactstrap';
+import Button from '@mui/material/Button';
 
 const ChatForm = props => {
     const [state, dispatch] = useContext(GlobalStore);
@@ -45,7 +45,7 @@ const ChatForm = props => {
             </FormGroup>
             
             <FormGroup>
-            <Button>Enter</Button>
+            <Button variant="contained" color="primary">Enter</Button>
             </FormGroup>
           </Form>
 

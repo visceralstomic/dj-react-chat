@@ -26,7 +26,6 @@ services:
     ports:
       - 6379:6379
   frontend:
-    command: npm start
     build:
       context: ./app_frontend/
       dockerfile: Dockerfile
@@ -37,6 +36,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./app_frontend:/app/app_frontend
+      - ./app/app_frontend/node_modules
     depends_on:
       - web
 

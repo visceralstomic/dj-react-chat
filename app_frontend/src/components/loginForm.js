@@ -20,7 +20,6 @@ const LoginForm = props => {
         UserService
             .login({username, password})
             .then(data => {
-
                 dispatch({
                     type: 'SET_USER',
                     data: {
@@ -29,11 +28,10 @@ const LoginForm = props => {
                         photo: data.photo
                     }
                 });
-                localStorage.setItem('IsLoggedIn', true)
+                localStorage.setItem('IsLoggedIn', true);
                 history.replace(from);
             })
             .catch(error => {
-                
                 setLoginError(error.response.data.error);
                 setTimeout(() => {
                     setLoginError(null);
