@@ -13,13 +13,20 @@
   --chat-form-height: 110px;
   --chat-form-padd: 7px;
 
+  --chat-border-green: hsla(147, 100%, 33%, 1);
+
 }
 
+
+input {
+  color:  white !important; 
+}
 
 
 html, body, #root{
   width: 100%;
   height: 100%;
+  background-color: #191919;
 }
  #root {
   width: 100%;
@@ -33,12 +40,12 @@ html, body, #root{
   display: grid;
   grid-template-columns: minmax(200px, var(--side-max-width)) minmax(400px, var(--main-max-width));
   grid-template-rows: var(--app-max-height);
-  border: 1px solid black;
+  border: 1px solid var(--chat-border-green);
   border-radius: 10px;
 }
 
 .side-bar {
-  border-right: 1px solid black;
+  border-right: 1px solid var(--chat-border-green);
 }
 
 .side-header {
@@ -48,7 +55,7 @@ html, body, #root{
   justify-content: space-between;
   align-items: center;
   height: var(--side-header-height);
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--chat-border-green);
 
 }
 
@@ -60,6 +67,7 @@ html, body, #root{
   flex-direction: row;
   justify-content: left;
   align-items: center;
+  color:  var(--chat-border-green);
 }
 
 .user-panel > img {
@@ -77,12 +85,12 @@ html, body, #root{
   width: 27px;
   border-radius: 50%;
   background-color:white;
-  border: 2px solid black;
+  border: 2px solid var(--chat-border-green);
 }
 
 .chat-form-panel  {
   padding: var(--chat-form-padd);
-  border-bottom: 1px solid black ;
+  border-bottom: 1px solid var(--chat-border-green) ;
   height: var(--chat-form-height);
 }
 

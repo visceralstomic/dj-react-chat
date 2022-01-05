@@ -22,18 +22,15 @@ const RoomList = props => {
     return (
         <div className="room-list">
             {state.chat.rooms.map(room => {
-                const style = {
-                    borderLeft: room.creator.id === state.user.uid ? '15px solid hsl(353, 59%, 43%)' : ''
-                } 
+               
                 return <button
-                            style={style} 
                             key={room.id} 
                             onClick={() => dispatch({type: 'SET_CHAT_ROOM', data: room})} 
                         >
                         {room.name} {room.creator.id === state.user.uid 
                                         ? <FaCrown
                                             style={{
-                                                color: 'hsl(353, 59%, 43%)'
+                                                color: '#191919'
                                             }}
                                           /> : null }
                         </button>

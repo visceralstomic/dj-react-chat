@@ -2,7 +2,8 @@ import {useState, useEffect, useRef, useContext} from "react";
 import {GlobalStore} from "../store/globalStore";
 import "./chat.css";
 import ChatMessage  from "./chatMessage";
-import { Button} from 'reactstrap';
+
+import { Button } from "@mui/material/";
 import { SOCKET_URL } from "../services/globalAxios";
 import {FaArrowLeft} from "react-icons/fa";
 import RoomSettingsMenu from "./roomSettingsMenu";
@@ -77,7 +78,9 @@ const Chat = props => {
               />
               {chatRoom.name}
               <div className="header-buttons">
-                <Button onClick={() => setToggle(true)}>Menu</Button>
+                <Button onClick={() => setToggle(true)} variant="contained">
+                  Menu
+                </Button>
               </div>
             </div>
             <div className="chat-log" >
@@ -105,7 +108,13 @@ const Chat = props => {
                     rows="1"
                   />
 
-                  <Button onClick={sendMessage}>Send</Button>
+                  <Button 
+                    
+                    variant="contained" 
+                    onClick={sendMessage}
+                  >
+                    Send
+                  </Button>
             </div>
             <RoomSettingsMenu show={toggle} setShow={setToggle} />
       </div>

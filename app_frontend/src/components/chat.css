@@ -12,10 +12,11 @@
 }
 
 .chat-header {
+    color: var(--chat-border-green);
     height: var(--chat-header-height);
     align-self: start;
     padding: var(--chat-header-padding);
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--chat-border-green);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -92,7 +93,7 @@
 }
 
 .chat-input-panel {
-    border-top: 1px solid black; 
+    border-top: 1px solid var(--chat-border-green); 
     align-self: end;
     height: var(--chat-panel-height);
     padding: var(--chat-panel-padding);
