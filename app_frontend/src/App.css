@@ -14,19 +14,17 @@
   --chat-form-padd: 7px;
 
   --chat-border-green: hsla(147, 100%, 33%, 1);
+  --chat-bg-color: #191919;
 
 }
 
 
-input {
-  color:  white !important; 
-}
 
 
 html, body, #root{
   width: 100%;
   height: 100%;
-  background-color: #191919;
+  background-color: var(--chat-bg-color);
 }
  #root {
   width: 100%;
@@ -107,7 +105,7 @@ html, body, #root{
 }
 
 .partic-list {
-  max-height: 180px;
+  height: 180px;
   overflow-y: auto;
 }
 
@@ -176,10 +174,11 @@ html, body, #root{
 
 
 .alt-user-photo {
-  border: 1px solid black; 
+  border: 1px solid var(--chat-border-green); 
   width: 37px;
   height: 37px;
   border-radius: 50%;
+  color: var(--chat-border-green);
 }
 
 .loader {

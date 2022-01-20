@@ -5,11 +5,36 @@ import AuthPage from "./components/authPage";
 import {GlobalStore} from "./store/globalStore";
 import RoomList from "./components/roomList";
 import ChatForm from "./components/chatForm";
-import { Jumbotron, Container, Spinner } from 'reactstrap';
 import Logout from "./components/logout";
 import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AuthRouter from "./utils/authRouter";
 import UserImage from "./components/userImage";
+import {Card, CardContent, Typography, CircularProgress} from "@mui/material";  
+import {createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+const greenColor = "hsla(147, 100%, 33%, 1)"
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: greenColor,
+      contrastText: "#191919",
+      disabled: "hsla(0, 0%, 77%, 1)"
+    },
+    text: {
+      primary: "#ffffff"
+    },
+    border: {
+      primary: greenColor
+    },
+    action: {
+      disabledBackground: "hsla(0, 0%, 77%, 0.32)", 
+      disabled: "hsla(0, 3%, 11%, 1)"
+    }
+  },
+});
+
 
 
 const App = () => {
@@ -17,6 +42,7 @@ const App = () => {
   const chatRoom = state.chat.currentRoom;
   return (
     <div className="app">
+      <ThemeProvider theme={theme}>
         <Router>
         <Switch>
           <AuthRouter exact path="/">
@@ -52,19 +78,21 @@ const App = () => {
                       <Chat /> 
                     ) : ( 
                       <div className='empty-main'>
-                        <Jumbotron fluid>
-                          <Container fluid>
-                            <h1 className="display-4">Select chat room or create one</h1>
-                          </Container>
-                        </Jumbotron>
+
+                        <Card sx={{ p: 1, color: "#191919", backgroundColor: "hsla(110, 0%, 77%, 1)", pt: 7, pb: 7 }}>
+                          <Typography variant="h2">
+                            Select chat room or create one
+                          </Typography>
+                        </Card>
                       </div>
                     )}
                   </div>
                 </>
               ) : (
+
                 <div className='loader' >
-                  <Spinner  color="dark"/> 
-                  </div>
+                  <CircularProgress sx={{color: "hsla(147, 100%, 33%, 1)", }}/> 
+                </div>
               )} 
 
               </div>
@@ -77,6 +105,7 @@ const App = () => {
         </Route>
         </Switch>
       </Router>
+      </ThemeProvider>
     </div>
   )
 }

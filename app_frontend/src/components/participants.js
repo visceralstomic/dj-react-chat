@@ -1,8 +1,9 @@
 import {useContext} from "react";
 import { GlobalStore } from "../store/globalStore";
 import ChatService from "../services/chatService";
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import {List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import {FaCrown, FaTrashAlt} from "react-icons/fa";
+
 
 const Participants = ({participants, setParticipants, setUsers}) => {
     const [state, dispatch] = useContext(GlobalStore);
@@ -24,18 +25,22 @@ const Participants = ({participants, setParticipants, setUsers}) => {
     }
     
     return (
-        <ListGroup className='partic-list'>
+        <List className='partic-list'>
                     {participants.map(participant => {
-                      return <ListGroupItem className='partic-item' key={participant.id}>
-                                {participant.user.username}
+                      return <ListItem classes={{ label: 'partic-item' }}  key={participant.id}>
+                                <ListItemText primary={`${participant.user.username}`} />
+                                
                                 {participant.user.id === chatRoom.creator.id ? (
+                                    
                                     <FaCrown
                                           style={{
                                               color: 'hsl(353, 59%, 43%)'
                                           }}
                                     />
+                                    
                                 ) : (
                                   state.user.uid === chatRoom.creator.id ? (
+                                    
                                       <FaTrashAlt
                                         onClick={(event) => handleDelete(event, participant.id)}
                                         style={{
@@ -43,13 +48,14 @@ const Participants = ({participants, setParticipants, setUsers}) => {
                                           cursor: 'pointer'
                                         }}
                                       />
+                                    
                                   ) : (
                                     null
                                   )
                                 )} 
-                            </ListGroupItem>
+                            </ListItem>
                     })}
-       </ListGroup>
+       </List>
     )
 }
 

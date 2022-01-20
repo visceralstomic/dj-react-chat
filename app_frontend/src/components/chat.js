@@ -2,11 +2,12 @@ import {useState, useEffect, useRef, useContext} from "react";
 import {GlobalStore} from "../store/globalStore";
 import "./chat.css";
 import ChatMessage  from "./chatMessage";
-
-import { Button } from "@mui/material/";
 import { SOCKET_URL } from "../services/globalAxios";
 import {FaArrowLeft} from "react-icons/fa";
 import RoomSettingsMenu from "./roomSettingsMenu";
+import { Button } from "@mui/material/";
+import {createTheme, ThemeProvider } from "@mui/material/styles";
+
 
 const Chat = props => {
     const [messages, setMessages] = useState([]);
@@ -23,18 +24,18 @@ const Chat = props => {
 
     useEffect(()=> {
         socket.current =  new WebSocket(`${SOCKET_URL}/ws/chat/${chatRoom.id}/`);
-        socket.current.addEventListener('open', (event) => {
+        socket.current.addEventListener('open', event => {
             console.log('OPEN!');
             socket.current.send(JSON.stringify({
               'command': 'fetch_messages'
             }))
           });
       
-        socket.current.addEventListener('close', (event) => {
+        socket.current.addEventListener('close', event => {
             console.error(event)
           });
       
-        socket.current.addEventListener('message', (event) => {
+        socket.current.addEventListener('message', event => {
             const data = JSON.parse(event.data);
             switch(data.command) {
               case 'messages':
@@ -76,7 +77,7 @@ const Chat = props => {
                 }}
                 className="to-side-bar" 
               />
-              {chatRoom.name}
+              <strong>{chatRoom.name}</strong>
               <div className="header-buttons">
                 <Button onClick={() => setToggle(true)} variant="contained">
                   Menu
@@ -108,10 +109,10 @@ const Chat = props => {
                     rows="1"
                   />
 
-                  <Button 
-                    
+                  <Button  
                     variant="contained" 
                     onClick={sendMessage}
+                    color="primary"
                   >
                     Send
                   </Button>

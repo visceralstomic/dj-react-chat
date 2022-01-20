@@ -1,7 +1,7 @@
 import {useContext} from "react";
-import { Button, ListGroup, ListGroupItem , Label, Input} from 'reactstrap';
 import chatService from "../services/chatService";
 import {GlobalStore} from "../store/globalStore";
+import {List, ListItem, ListItemText, ListItemIcon, Checkbox, Button } from "@mui/material";
 
 
 const AddUsers = ({users, setUsers,setParticipants }) => {
@@ -37,34 +37,38 @@ const AddUsers = ({users, setUsers,setParticipants }) => {
 
     return (
         <>
-            <ListGroup  className='partic-list'>
+            <List  className='partic-list'>
                         {users.length > 0 ? 
                         ( users.map(user => {
                             return (
-                                <ListGroupItem
+                                <ListItem
                                     className='partic-item' 
                                     key={user.id}
-                                >
-                                    <Label check>
-                                        <Input 
+                                    secondaryAction={
+                                        <Checkbox
+                                            edge="end"
                                             value={user.id}
                                             type="checkbox" 
                                             checked={users.toAdd}
                                             onChange={handleCheck}
                                         />
-                                        {user.username}
-                                    </Label>
-                                </ListGroupItem>
+                                    }
+                                >
+                                    <ListItemText primary={user.username} />
+                                </ListItem>
                             )
                         }) ) : (
                             <div>
                                 There are no users to add
                             </div>
                         )}
-            </ListGroup>
+            </List>
                     <Button 
                         onClick={AddUsersToRoom} 
                         disabled={users.length === 0 && true}
+                        variant="contained"
+                        color="primary"
+                        size="small"
                     >
                         Add users to room
                     </Button>

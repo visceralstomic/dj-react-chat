@@ -47,8 +47,8 @@
 
 .message-text {
     max-width: 350px;
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: #363636;
     margin-left: 5px ;
     padding: 7px;
     border-radius: 10px;
@@ -56,7 +56,7 @@
     display: flex;
     font-size: 1.05em;
     flex-direction:column;
-    border: 1px solid black;
+    border: 1px solid #363636;
 }
 
 .sender {
@@ -64,10 +64,12 @@
 }
 
 .sender > .message-text  {
-    color: hsl(353, 59%, 43%);
-    border: 1px solid hsl(353, 59%, 43%);
+    color: white;
+    border: 1px solid var(--chat-border-green);
+    background-color: var(--chat-border-green);
     margin-left: 0 ;
 }
+
 
 .sender > .user-photo   {
     display: none;
@@ -88,6 +90,11 @@
     align-self: end;
 }
 
+.sender > .message-text > .info-date {
+    color: black;
+}
+
+
 .sender > .message-text > .info-username  {
     display: none;
 }
@@ -106,7 +113,9 @@
     border-radius: 10px;
     padding: 8px;
     resize: none;
-    border: 1px solid hsl(353, 59%, 43%);
+    border: 1px solid var(--chat-border-green);
+    background-color: var(--chat-bg-color);
+    color: white;
 }
 
 .message-input:focus {
