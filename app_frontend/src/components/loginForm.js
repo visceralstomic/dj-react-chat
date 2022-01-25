@@ -2,14 +2,19 @@ import {useState, useContext} from "react";
 import UserService from "../services/userService";
 import {GlobalStore} from "../store/globalStore";
 import {useLocation, useHistory} from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {Button, Box} from "@mui/material";
+import CustomTextField from "../utils/customTextField";
+
+
 
 const LoginForm = props => {
     const { toggle, setToggle} = props;
     const [state, dispatch] = useContext(GlobalStore);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginError, setLoginError] = useState(null);
+    
+    const [usernameError, setUsernameError] = useState(null);
+    const [passwordError, setPasswordeError] = useState(null);
 
     let history = useHistory();
     let location = useLocation();
@@ -32,9 +37,11 @@ const LoginForm = props => {
                 history.replace(from);
             })
             .catch(error => {
-                setLoginError(error.response.data.error);
+                setUsernameError(error.response.data.username || error.response.data.error );
+                setPasswordeError(error.response.data.password || error.response.data.error);
                 setTimeout(() => {
-                    setLoginError(null);
+                    setUsernameError(null);
+                    setPasswordeError(null);
                 }, 7000);
             })
     }
@@ -42,43 +49,39 @@ const LoginForm = props => {
     return (
         <>
         <h3>Login</h3>
-        <Form onSubmit={handleSubmit}>
-            <FormGroup>
-                <Label for="usernameinput">Username</Label>
-                <Input
-                    id="usernameinput"
-                    type="text" 
-                    value={username}
-                    onChange={({target}) => setUsername(target.value)}
-                    invalid={loginError !== null} 
-                />
-            </FormGroup>
-            <FormGroup >
-                <Label for="passwordinput">Password</Label>
-                <Input
-                    id="passwordinput" 
-                    type="password" 
-                    value={password}
-                    onChange={({target}) => setPassword(target.value)}
-                    invalid={loginError !== null} 
-                />
-            </FormGroup>
-            {loginError ? (
-                <FormGroup className="error-message">
-                    {loginError}
-                </FormGroup>
-            ) : (
-                null
-            )}
-            <FormGroup className="form-btns">
-                <Button>Log in</Button>
-                <span>
+        <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
+            <CustomTextField 
+                fullWidth
+                required
+                error={usernameError !== null}
+                margin="normal"
+                label="Username"
+                value={username}
+                onChange={({target}) => setUsername(target.value)}
+                helperText={usernameError !== null ? usernameError : null}
+            />
+            <CustomTextField
+                fullWidth
+                required
+                error={passwordError != null}
+                margin="normal" 
+                label="Password"
+                type="password"
+                value={password}
+                onChange={({target}) => setPassword(target.value)}
+                helperText={passwordError !== null ? passwordError : null}
+            />
+            <Box className="form-btns">
+                <Button variant="contained" color="primary" type="submit" sx={{mt: 1, mb: 1}}>Log in</Button>
+                 <span>
                     Not registered ?  <br />  Then <span className="auth-toggle" onClick={() => setToggle(!toggle)}>Sign up</span>
-                </span>
-            </FormGroup>
-        </Form>
+                 </span>
+            </Box>
+        </Box>
         </>
     )
 }
 
 export default LoginForm;
+
+

@@ -128,7 +128,7 @@ html, body, #root{
 }
 
 .auth-page {
-  border: 1px solid black;
+  border: 1px solid var(--chat-border-green);
   width: var(--app-max-width);
   height: var(--app-max-height);
   display: grid;
@@ -139,8 +139,9 @@ html, body, #root{
 .auth-container {
   width: 450px;
   padding: 15px;
-  border: 1px solid black;  
+  border: 1px solid var(--chat-border-green);  
   border-radius: 25px;
+  color:  var(--chat-border-green);
 }
 
 .auth-container > h3 {
@@ -152,6 +153,7 @@ html, body, #root{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color:  white;
 } 
 
 
@@ -198,7 +200,7 @@ html, body, #root{
 
 
 .auth-toggle {
-  color: hsl(353, 59%, 43%);
+  color:  var(--chat-border-green);
 
 }
 .auth-toggle:hover {

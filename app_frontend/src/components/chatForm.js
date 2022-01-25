@@ -1,12 +1,10 @@
 import {useState, useContext} from "react";
 import ChatService from "../services/chatService";
 import {GlobalStore} from "../store/globalStore";
-import { FormGroup, Button, TextField,
+import CustomTextField from "../utils/customTextField";
+import { FormGroup, Button, 
         Box, Grid, Container, FromControlLabel } from '@mui/material';
 
-
-
-const greenColor = "hsla(147, 100%, 33%, 1)"
 
 
 const ChatForm = props => {
@@ -41,22 +39,14 @@ const ChatForm = props => {
     return (
 
           <Box  component="form" onSubmit={handleClick} noValidate>
-            <TextField
+
+            <CustomTextField
                 fullWidth
                 label="Add room"
                 variant="standard"
                 value={chatName} 
                 onChange={handleChange}
                 color="primary"
-
-                sx={{
-                    "& .MuiFormLabel-root": {
-                        color: greenColor
-                    },
-                    "& .MuiInput-underline:before": {
-                        borderBottomColor: "hsla(110, 9%, 50%, 1)"
-                    }
-                  }}
                 
             />
 

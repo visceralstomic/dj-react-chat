@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Participants from "./participants";
 import AddUsers from "./addUsers";
 import UserService from "../services/userService";
-import {Modal, Box, Typography, Button, Tab, Tabs, List, ListItem, ListItemText, Stack } from "@mui/material";
+import {Modal, Box, Typography, Button, Tab, Tabs, Stack } from "@mui/material";
 
 
 const style = {
@@ -19,6 +19,7 @@ const style = {
   boxShadow: 24,
   p: 3,
 };
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -157,75 +158,3 @@ const RoomSettingsMenu = ({show, setShow}) => {
 }
 
 export default RoomSettingsMenu;
-
-/* 
-
-<Modal 
-            isOpen={show} 
-            size='sm' 
-            toggle={handleClose} 
-            backdrop={'static'} 
-            centered={true} 
-            keyboard={false}
-        >
-        <ModalHeader toggle={handleClose}>
-          Room menu
-        </ModalHeader>
-        <ModalBody>
-        <Nav tabs>
-            <NavItem className="tab-item">
-                    <NavLink
-                        className={`${classnames({ active: activeTab === '1' })} text-dark`}
-                        onClick={() => { toggle('1'); }}
-                    >
-                        Participants
-                    </NavLink>
-            </NavItem>
-                {state.user.uid === state.chat.currentRoom.creator.id ? (
-                    <NavItem className="tab-item">
-                        <NavLink
-                            className={`${classnames({ active: activeTab === '2' })} text-dark`}
-                            onClick={() => { toggle('2'); }}
-                        >
-                        Users
-                        </NavLink>
-                    </NavItem>
-                ) : (
-                    null
-                )}
-        </Nav>
-        <TabContent activeTab={activeTab}>
-            <TabPane tabId='1'>
-                <ListGroup className='partic-list'>
-                    <Participants 
-                        participants={participants}
-                        setParticipants={setParticipants}
-                        setUsers={setAllUsers}
-                    />
-                </ListGroup>
-            </TabPane>
-            {state.user.uid === state.chat.currentRoom.creator.id ? (
-                <TabPane tabId='2'>
-                    <ListGroup className='partic-list'>
-                        <AddUsers 
-                            users={allUsers} setUsers={setAllUsers}
-                            setParticipants={setParticipants}
-                        />
-                    </ListGroup>
-                </TabPane>
-            ) : (
-                null
-            )}
-        </TabContent>
-        </ModalBody>
-        <ModalFooter>
-            {state.user.uid === state.chat.currentRoom.creator.id ? (
-                <Button color="danger" onClick={handleDelete} >Delete room</Button>
-            ) : (
-                null
-            )}
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
-        </ModalFooter>
-        </Modal>
-
-*/
