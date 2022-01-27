@@ -12,11 +12,11 @@
 }
 
 .chat-header {
-    color: var(--chat-border-green);
+    color: var(--chat-green);
     height: var(--chat-header-height);
     align-self: start;
     padding: var(--chat-header-padding);
-    border-bottom: 1px solid var(--chat-border-green);
+    border-bottom: 5px solid var(--chat-border-green);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -66,7 +66,7 @@
 .sender > .message-text  {
     color: white;
     border: 1px solid var(--chat-border-green);
-    background-color: var(--chat-border-green);
+    background-color: var(--chat-green);
     margin-left: 0 ;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .chat-input-panel {
-    border-top: 1px solid var(--chat-border-green); 
+    border-top: 5px solid var(--chat-border-green); 
     align-self: end;
     height: var(--chat-panel-height);
     padding: var(--chat-panel-padding);

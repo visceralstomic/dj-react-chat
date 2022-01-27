@@ -33,6 +33,9 @@ const ChatForm = props => {
             })
             .catch( error => {
               setError(error.response.data.name)
+              setTimeout(() => {
+                setError(null)
+              }, 7000)
             })
         }
       }
@@ -42,12 +45,13 @@ const ChatForm = props => {
 
             <CustomTextField
                 fullWidth
+                error={formError !== null}
                 label="Add room"
                 variant="standard"
                 value={chatName} 
                 onChange={handleChange}
                 color="primary"
-                
+                helperText={formError !== null ? formError : null}                
             />
 
             <Button 
@@ -55,6 +59,7 @@ const ChatForm = props => {
                   color="primary"
                   onClick={handleClick}
                   sx={{mt: 1}}
+                  
              >
                   Enter
             </Button>

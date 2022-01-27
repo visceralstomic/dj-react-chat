@@ -10,11 +10,12 @@
 
   --user-panel-width: 120px;
 
-  --chat-form-height: 110px;
+  --chat-form-height: 130px;
   --chat-form-padd: 7px;
 
-  --chat-border-green: hsla(147, 100%, 33%, 1);
-  --chat-bg-color: #191919;
+  --chat-border-green: #1a1a1a;
+  --chat-green: hsla(147, 100%, 33%, 1);
+  --chat-bg-color: #242424;
 
 }
 
@@ -38,12 +39,13 @@ html, body, #root{
   display: grid;
   grid-template-columns: minmax(200px, var(--side-max-width)) minmax(400px, var(--main-max-width));
   grid-template-rows: var(--app-max-height);
-  border: 1px solid var(--chat-border-green);
+  
   border-radius: 10px;
+  background-color: #141414;
 }
 
 .side-bar {
-  border-right: 1px solid var(--chat-border-green);
+  border-right: 5px solid var(--chat-border-green);
 }
 
 .side-header {
@@ -53,7 +55,7 @@ html, body, #root{
   justify-content: space-between;
   align-items: center;
   height: var(--side-header-height);
-  border-bottom: 1px solid var(--chat-border-green);
+  border-bottom: 5px solid var(--chat-border-green);
 
 }
 
@@ -65,7 +67,7 @@ html, body, #root{
   flex-direction: row;
   justify-content: left;
   align-items: center;
-  color:  var(--chat-border-green);
+  color:  var(--chat-green);
 }
 
 .user-panel > img {
@@ -88,7 +90,7 @@ html, body, #root{
 
 .chat-form-panel  {
   padding: var(--chat-form-padd);
-  border-bottom: 1px solid var(--chat-border-green) ;
+  border-bottom: 5px solid var(--chat-border-green) ;
   height: var(--chat-form-height);
 }
 
@@ -128,7 +130,8 @@ html, body, #root{
 }
 
 .auth-page {
-  border: 1px solid var(--chat-border-green);
+
+  background-color: var( --chat-border-green);
   width: var(--app-max-width);
   height: var(--app-max-height);
   display: grid;
@@ -137,11 +140,12 @@ html, body, #root{
 }
 
 .auth-container {
+  background-color: var( --chat-border-green);
   width: 450px;
   padding: 15px;
-  border: 1px solid var(--chat-border-green);  
+  border: 5px solid var(--chat-bg-color);  
   border-radius: 25px;
-  color:  var(--chat-border-green);
+  color:  var(--chat-green);
 }
 
 .auth-container > h3 {
@@ -176,11 +180,11 @@ html, body, #root{
 
 
 .alt-user-photo {
-  border: 1px solid var(--chat-border-green); 
+  border: 1px solid var(--chat-green); 
   width: 37px;
   height: 37px;
   border-radius: 50%;
-  color: var(--chat-border-green);
+  color: var(--chat-green);
 }
 
 .loader {
@@ -200,7 +204,7 @@ html, body, #root{
 
 
 .auth-toggle {
-  color:  var(--chat-border-green);
+  color:  var(--chat-green);
 
 }
 .auth-toggle:hover {
