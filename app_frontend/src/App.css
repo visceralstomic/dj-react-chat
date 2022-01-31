@@ -13,7 +13,7 @@
   --chat-form-height: 130px;
   --chat-form-padd: 7px;
 
-  --chat-border-green: #1a1a1a;
+  --chat-border-grey: #1a1a1a;
   --chat-green: hsla(147, 100%, 33%, 1);
   --chat-bg-color: #242424;
 
@@ -45,7 +45,7 @@ html, body, #root{
 }
 
 .side-bar {
-  border-right: 5px solid var(--chat-border-green);
+  border-right: 5px solid var(--chat-bg-color);
 }
 
 .side-header {
@@ -55,7 +55,8 @@ html, body, #root{
   justify-content: space-between;
   align-items: center;
   height: var(--side-header-height);
-  border-bottom: 5px solid var(--chat-border-green);
+  border-bottom: 5px solid var(--chat-bg-color);
+
 
 }
 
@@ -85,13 +86,14 @@ html, body, #root{
   width: 27px;
   border-radius: 50%;
   background-color:white;
-  border: 2px solid var(--chat-border-green);
+  border: 2px solid var(--chat-bg-color);
 }
 
 .chat-form-panel  {
   padding: var(--chat-form-padd);
-  border-bottom: 5px solid var(--chat-border-green) ;
+  border-bottom: 5px solid var(--chat-bg-color) ;
   height: var(--chat-form-height);
+  
 }
 
 .chat-form-panel > form {
@@ -104,11 +106,13 @@ html, body, #root{
 
 .side-menu {
   height: calc(var(--app-max-height) - var(--side-header-height) - var(--chat-form-height));
+  border-radius: 10px;
 }
 
 .partic-list {
   height: 180px;
   overflow-y: auto;
+
 }
 
 .partic-item {
@@ -131,7 +135,7 @@ html, body, #root{
 
 .auth-page {
 
-  background-color: var( --chat-border-green);
+  background-color: var( --chat-border-grey);
   width: var(--app-max-width);
   height: var(--app-max-height);
   display: grid;
@@ -140,7 +144,7 @@ html, body, #root{
 }
 
 .auth-container {
-  background-color: var( --chat-border-green);
+  background-color: var( --chat-border-grey);
   width: 450px;
   padding: 15px;
   border: 5px solid var(--chat-bg-color);  

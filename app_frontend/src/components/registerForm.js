@@ -1,12 +1,11 @@
 import {useState} from "react";
 import UserService from "../services/userService";
-
 import {Button, Box, Input, FormHelperText} from "@mui/material";
 import CustomTextField from "../utils/customTextField";
 
 
 const RegisterForm = props => {
-    const { toggle, setToggle} = props;
+    const { toggle, setToggle, setOpen} = props;
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -27,7 +26,6 @@ const RegisterForm = props => {
         formData.append('password', password);
         formData.append('password2', password2);
         if (photo) {
-            console.log(photo)
             formData.append('photo', photo, photo.name);
         }
 
@@ -41,9 +39,10 @@ const RegisterForm = props => {
             .createUser(formData)
             .then(data => {
                 setToggle(!toggle);
+                setOpen(true);
             })
             .catch(error => {
-                console.log(error.response.data)
+                //console.log(error.response.data)
                 for (let i in error.response.data) {
                     switch (i) {
                         case 'username':
@@ -134,61 +133,3 @@ const RegisterForm = props => {
 }
 
 export default RegisterForm;
-
-
-/*
-<Form onSubmit={handleSubmit}>
-                <FormGroup>
-                    <Label for="usernameinput">Username</Label>
-                    <Input
-                        id="usernameinput"
-                        type="text" 
-                        value={username}
-                        onChange={({target}) => setUsername(target.value)}
-                        invalid={usernameError !== undefined} 
-                    />
-                    {usernameError ? <FormError message={usernameError} /> : null}
-                </FormGroup>
-                <FormGroup>
-                    <Label for="passwordinput">Password</Label>
-                    <Input
-                        id="passwordinput" 
-                        type="password" 
-                        value={password}
-                        onChange={({target}) => setPassword(target.value)}
-                        invalid={passwordError !== undefined || error !== null}  
-                    />
-                    {passwordError ? <FormError message={passwordError} /> : null}
-                </FormGroup>
-                <FormGroup>
-                    <Label for="passwor2dinput">Repeat password</Label>
-                    <Input
-                        id="passwor2dinput" 
-                        type="password" 
-                        value={password2}
-                        onChange={({target}) => setPassword2(target.value)}
-                        invalid={password2Error !== undefined || error !== null}  
-                    />
-                    {password2Error ? <FormError message={password2Error} /> : null}
-                    {error ? <FormError message={error} /> : null}
-                </FormGroup>
-                <FormGroup>
-                    <Label for="userPhoto">Photo</Label>
-                    <Input 
-                        type="file" 
-                        name="file" 
-                        id="userPhoto" 
-                        accept="image/*"
-                        onChange={({target}) => setPhoto(target.files[0])}
-                        invalid={photoError !== undefined} 
-                    />
-                    {photoError ? <FormError message={photoError} /> : null}
-                </FormGroup>
-                <FormGroup className="form-btns">
-                    <Button color="success">Create account</Button>
-                    <span>
-                        Already registered?  <br />Then <span className="auth-toggle" onClick={() => setToggle(!toggle)}>Log in</span>
-                    </span>
-                </FormGroup>
-            </Form> 
-*/
