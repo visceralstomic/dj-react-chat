@@ -42,7 +42,7 @@ const RegisterForm = props => {
                 setOpen(true);
             })
             .catch(error => {
-                //console.log(error.response.data)
+                console.log(error.response.data)
                 for (let i in error.response.data) {
                     switch (i) {
                         case 'username':
@@ -108,6 +108,11 @@ const RegisterForm = props => {
                     onChange={({target}) => setPassword2(target.value)}
                     helperText={password2Error !== null ? password2Error : null}
                 />
+                {error !== null ? (
+                    <FormHelperText error={error !== null}>
+                        {error}
+                    </FormHelperText>
+                ) : null} 
                 <input 
                     type="file" 
                     name="file" 
