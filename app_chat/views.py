@@ -4,7 +4,7 @@ from .serializers import RoomSerial, ParticipantSerial, RoomChangeSerial, QryPar
 from .models import Room, Participant
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .chat_permissions import IsParticipantOrCreator
+from .chat_permissions import IsParticipantOrCreator, IsCreator
 
 
 
@@ -29,7 +29,7 @@ class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ParticipantListView(generics.ListCreateAPIView):
     queryset = Participant.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCreator]
 
     def get_queryset(self):
         queryset = self.queryset.all()
@@ -46,7 +46,7 @@ class ParticipantListView(generics.ListCreateAPIView):
 class ParticipantDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerial
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCreator]
 
     def get_serializer_class(self):
         return ParticipantChangeSerial if self.request.method in ('PUT','PATCH') else ParticipantSerial
