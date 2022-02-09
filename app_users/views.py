@@ -17,7 +17,7 @@ class UserListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = self.queryset.all()
-        if self.request.query_params.get('part_room', None):
+        if self.request.query_params.get('part_room', None): # return users who are NOT participants of referenced room
             qry_params = QuerySerial(data=self.request.query_params)
             qry_params.is_valid(raise_exception=True)
             queryset = queryset.exclude(participant__room__id=qry_params.validated_data['part_room'])

@@ -6,9 +6,9 @@ from django.core.files.images import get_image_dimensions
 
 def validate_photo(photo):
     width, height = get_image_dimensions(photo)
-    print(width, height)
+    #print(width, height)
     if width > 290 or height > 290:
-        raise ValidationError("Image size limitation is 290 x 370 ")
+        raise ValidationError("Image size limitation is 290 x 290 ")
 
 
 class CustomUser(AbstractUser):

@@ -7,8 +7,6 @@ import json
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-from PIL import Image
-import io
 
 
 User = get_user_model()
@@ -153,7 +151,7 @@ class ParticipantTest(TestSetUp):
 		self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 		self.assertIn(self.admin_user.username, self.testroom2.participant.values_list("user__username", flat=True))
 
-	def test_get_only_room_pariticpants(self):
+	def test_get_only_room_pariticipants(self):
 		url = reverse('app_chat:participant-list')
 		url_with_query = f"{url}?room_id={self.testroom2.id}"
 		self.client.login(username="admin", password="1234y")
@@ -161,12 +159,13 @@ class ParticipantTest(TestSetUp):
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 		self.assertEqual(len(response.data), len(self.testroom2.participant.values_list()))
 
-class MessageTest(TestSetUp):
-	def test_unauth_user_create_message(sefl):
-		url = reverse('app_chat:room-list')
-		new_room = {"name": 'Room 1'}
-		response = self.client.post(url, new_room) 
-		self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+	def test_cant_add_same_user_more_than_once(self):
+		url = reverse('app_chat:participant-list')
+		self.client.login(username="testuser1", password="1234y")
+		response = self.client.post(url, {"user": self.admin_user.id, "room": self.testroom2.id})
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+		
+
 
 
 
