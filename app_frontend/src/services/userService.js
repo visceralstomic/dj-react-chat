@@ -14,7 +14,7 @@ const logout = () => {
 }
 
 const getUser = () => {
-    return axios_instance
+    return axios_instance 
             .get('/users/get_user/')
             .then(response => response.data)
 }
