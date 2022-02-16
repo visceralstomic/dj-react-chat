@@ -23,14 +23,14 @@ const Chat = props => {
     useEffect(()=> {
         socket.current =  new WebSocket(`${SOCKET_URL}/ws/chat/${chatRoom.id}/`);
         socket.current.addEventListener('open', (event) => {
-            console.log('OPEN!');
+            //console.log('OPEN!');
             socket.current.send(JSON.stringify({
               'command': 'fetch_messages'
             }))
           });
       
         socket.current.addEventListener('close', (event) => {
-            console.error(event)
+            //console.error(event)
           });
       
         socket.current.addEventListener('message', (event) => {
